@@ -1,0 +1,49 @@
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  padding: 1em 1.5em;
+  background-color: #ffffff;
+  color: #221a0f;
+}
+
+.navbar_logo {
+  display: flex;
+  align-items: center;
+}
+
+.navbar_logo img {
+  width: 50px;
+  margin-right: 0.8em;
+}
+
+.navbar ul {
+  display: flex;
+  align-items: center;
+  list-style: none;
+}
+
+.navbar h2 {
+  font-size: 35px;
+  font-family: "Playfair Display";
+}
+
+.navbar li,
+.navbar a {
+  text-decoration: none;
+  color: #221a0f;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.3s;
+  padding: 0.5em 0.8em;
+  border-radius: 5px;
+}
+
+.navbar li:hover {
+  background-color: #4a2c2a;
+  color: #fff;
+}
+
+.navbar li:hover > a {
+  background-color: #4a2c2a;
+  color: #fff;
+}
