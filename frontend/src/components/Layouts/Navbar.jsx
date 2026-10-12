@@ -19,7 +19,7 @@ function Navbar() {
       </div>
       <ul>
         <li>
-          <Link to="/">Início</Link>
+          <Link to="/">Adquirir</Link>
         </li>
         {authenticated ? (
           <>

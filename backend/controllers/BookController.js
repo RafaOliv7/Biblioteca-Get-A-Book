@@ -78,6 +78,14 @@ module.exports = class BookController {
     }
   }
 
+  static async getAll(req, res) {
+    const books = await Book.find().sort("-createdAt");
+
+    res.status(200).json({
+      books: books,
+    });
+  }
+
   static async getAllUserBooks(req, res) {
     const token = getToken(req);
     const user = await getUserByToken(token);
@@ -88,6 +96,26 @@ module.exports = class BookController {
 
     res.status(200).json({
       books,
+    });
+  }
+
+  static async getBookById(req, res) {
+    const id = req.params.id;
+
+    if (!ObjectId.isValid(id)) {
+      res.status(422).json({ message: "ID inválido!" });
+      return;
+    }
+
+    const book = await Book.findOne({ _id: id });
+
+    if (!book) {
+      res.status(404).json({ message: "Livro não encontrado" });
+      return;
+    }
+
+    res.status(200).json({
+      book: book,
     });
   }
 };

@@ -12,8 +12,9 @@ import Register from "./components/pages/Auth/Register";
 import Home from "./components/pages/Home";
 import Profile from "./components/pages/User/Profile";
 import AddBook from "./components/pages/Book/AddBook";
+import BookDetails from "./components/pages/Book/BookDetails";
 import MyBooks from "./components/pages/Book/MyBooks";
-// EditBook, BookDetails e MyAdoptions entram nas próximas funcionalidades
+// EditBook e MyAdoptions entram nas próximas funcionalidades
 
 import { UserProvider } from "./context/UserContext";
 
@@ -30,6 +31,7 @@ function App() {
             <Route path="/user/profile" element={<Profile />}></Route>
             <Route path="/book/add" element={<AddBook />}></Route>
             <Route path="/book/mybooks" element={<MyBooks />}></Route>
+            <Route path="/book/:id" element={<BookDetails />}></Route>
             <Route path="/" element={<Home />}></Route>
           </Routes>
         </Container>

@@ -12,6 +12,9 @@ router.post(
   imageUpload.array("images"),
   BookController.create,
 );
+
+router.get("/", BookController.getAll);
 router.get("/mybooks", verifyToken, BookController.getAllUserBooks);
+router.get("/:id", BookController.getBookById);
 
 module.exports = router;

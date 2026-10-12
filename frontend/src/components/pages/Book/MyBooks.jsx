@@ -42,8 +42,9 @@ function MyBooks() {
                 width="px75"
               />
               <span className="bold">{book.title}</span>
-              <span>{book.author}</span>
-              <span>{book.category}</span>
+              <div className={styles.actions}>
+                <Link to={`/book/${book._id}`}>Ver detalhes</Link>
+              </div>
             </div>
           ))}
         {books.length === 0 && <p>Não há Livros cadastrados</p>}
