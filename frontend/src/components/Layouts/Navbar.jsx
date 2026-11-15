@@ -24,9 +24,6 @@ function Navbar() {
         {authenticated ? (
           <>
             <li>
-              <Link to="/book/add">Cadastrar Livro</Link>
-            </li>
-            <li>
               <Link to="/book/mybooks">Meus Livros</Link>
             </li>
             <li>

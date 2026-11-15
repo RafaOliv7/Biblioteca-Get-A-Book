@@ -43,7 +43,7 @@ function AddBook() {
     setFlashMessage(data.message, msgType);
 
     if (msgType !== "error") {
-      navigate("/");
+      navigate("/book/mybooks");
     }
   }
 

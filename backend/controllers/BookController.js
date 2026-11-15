@@ -118,4 +118,112 @@ module.exports = class BookController {
       book: book,
     });
   }
+
+  static async removeBookById(req, res) {
+    const id = req.params.id;
+
+    if (!ObjectId.isValid(id)) {
+      res.status(422).json({ message: "ID inválido!" });
+      return;
+    }
+
+    const book = await Book.findOne({ _id: id });
+
+    if (!book) {
+      res.status(404).json({ message: "Livro não encontrado" });
+      return;
+    }
+
+    const token = getToken(req);
+    const user = await getUserByToken(token);
+
+    if (book.user._id.toString() !== user._id.toString()) {
+      res.status(422).json({
+        message:
+          "Houve um problema em processar a sua solicitação, tente novamente mais tarde",
+      });
+      return;
+    }
+
+    await Book.findByIdAndDelete(id);
+
+    res.status(200).json({ message: "Livro removido com sucesso!" });
+  }
+
+  static async updateBook(req, res) {
+    const id = req.params.id;
+
+    const { title, author, pages, category, language, available } =
+      req.body || {};
+
+    const images = req.files;
+
+    const updatedData = {};
+
+    const book = await Book.findOne({ _id: id });
+
+    if (!book) {
+      res.status(404).json({ message: "Livro não encontrado" });
+      return;
+    }
+
+    const token = getToken(req);
+    const user = await getUserByToken(token);
+
+    if (book.user._id.toString() !== user._id.toString()) {
+      res.status(422).json({
+        message:
+          "Houve um problema em processar a sua solicitação, tente novamente mais tarde",
+      });
+      return;
+    }
+
+    if (!title) {
+      res.status(422).json({ message: "O título é obrigatório!" });
+      return;
+    } else {
+      updatedData.title = title;
+    }
+
+    if (!author) {
+      res.status(422).json({ message: "O autor é obrigatório!" });
+      return;
+    } else {
+      updatedData.author = author;
+    }
+
+    if (!pages) {
+      res
+        .status(422)
+        .json({ message: "A quantidade de páginas é obrigátória!" });
+      return;
+    } else {
+      updatedData.pages = pages;
+    }
+
+    if (!category) {
+      res.status(422).json({ message: "A categoria é obrigatória!" });
+      return;
+    } else {
+      updatedData.category = category;
+    }
+
+    if (!language) {
+      res.status(422).json({ message: "A linguagem é obrigatória!" });
+      return;
+    } else {
+      updatedData.language = language;
+    }
+
+    if (images.length > 0) {
+      updatedData.images = [];
+      images.map((image) => {
+        updatedData.images.push(image.filename);
+      });
+    }
+
+    await Book.findByIdAndUpdate(id, updatedData);
+
+    res.status(200).json({ message: "Livro atualizado com sucesso!" });
+  }
 };

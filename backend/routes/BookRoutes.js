@@ -14,7 +14,15 @@ router.post(
 );
 
 router.get("/", BookController.getAll);
+
 router.get("/mybooks", verifyToken, BookController.getAllUserBooks);
 router.get("/:id", BookController.getBookById);
+router.delete("/:id", verifyToken, BookController.removeBookById);
+router.patch(
+  "/:id",
+  verifyToken,
+  imageUpload.array("images"),
+  BookController.updateBook,
+);
 
 module.exports = router;

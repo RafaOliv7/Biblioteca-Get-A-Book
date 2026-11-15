@@ -15,7 +15,7 @@ const BookDetails = () => {
     });
   }, [id]);
 
-  // A funcionalidade de adotar o livro entra em uma próxima funcionalidade
+  // A funcionalidade de adotar o livro entra na próxima funcionalidade
 
   return (
     <>

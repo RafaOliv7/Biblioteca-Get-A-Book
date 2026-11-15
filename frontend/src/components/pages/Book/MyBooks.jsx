@@ -8,9 +8,12 @@ import { Link } from "react-router-dom";
 
 import RoundedImage from "../../Layouts/RoundedImage";
 
+import useFlashMessage from "../../../hooks/useFlashMessage";
+
 function MyBooks() {
   const [books, setBooks] = useState([]);
   const [token] = useState(localStorage.getItem("token") || "");
+  const { setFlashMessage } = useFlashMessage();
 
   useEffect(() => {
     api
@@ -24,12 +27,34 @@ function MyBooks() {
       });
   }, [token]);
 
-  // Editar, Excluir e status de adoção entram nas próximas funcionalidades
+  async function removeBook(id) {
+    let msgType = "success";
+
+    const data = await api
+      .delete(`/books/${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((response) => {
+        const updatedBooks = books.filter((book) => book._id !== id);
+        setBooks(updatedBooks);
+        return response.data;
+      })
+      .catch((err) => {
+        msgType = "error";
+        return err.response.data;
+      });
+
+    setFlashMessage(data.message, msgType);
+  }
+
+  // concludeAdoption entra na próxima funcionalidade (adotar livros)
 
   return (
     <section>
       <div className={styles.booklist_header}>
-        <h1>Meus Livros</h1>
+        <h1>MyBooks</h1>
         <Link to="/book/add">Cadastrar Livros</Link>
       </div>
       <div className={styles.booklist_container}>
@@ -43,7 +68,20 @@ function MyBooks() {
               />
               <span className="bold">{book.title}</span>
               <div className={styles.actions}>
-                <Link to={`/book/${book._id}`}>Ver detalhes</Link>
+                {book.available ? (
+                  <>
+                    <Link to={`/book/edit/${book._id}`}>Editar</Link>
+                    <button
+                      onClick={() => {
+                        removeBook(book._id);
+                      }}
+                    >
+                      Excluir
+                    </button>
+                  </>
+                ) : (
+                  <p>Book já adotado</p>
+                )}
               </div>
             </div>
           ))}
