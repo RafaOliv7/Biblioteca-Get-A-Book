@@ -19,12 +19,12 @@ function Navbar() {
       </div>
       <ul>
         <li>
-          <Link to="/">Início</Link>
+          <Link to="/">Adquirir</Link>
         </li>
         {authenticated ? (
           <>
             <li>
-              <Link to="/book/add">Cadastrar Livro</Link>
+              <Link to="/book/myadoptions">Minhas adoções</Link>
             </li>
             <li>
               <Link to="/book/mybooks">Meus Livros</Link>

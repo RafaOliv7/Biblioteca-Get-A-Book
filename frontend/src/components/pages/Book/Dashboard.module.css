@@ -35,10 +35,11 @@
 .booklist_row {
   border-bottom: 1px solid #4a2c2a;
   padding: 1em;
-  margin: 1em;
+  margin: 1em 0;
   display: flex;
   align-items: center;
   width: 100%;
+  box-sizing: border-box;
 }
 
 .booklist_row img {
